@@ -14,5 +14,5 @@ function Signup() {
     swal("Упс!", "Вы не приняли правила пользования сайтом teamsearch.ru!", "error");
   }
 
-  $.post("api/signup.php", {login: login, password: password, password2: password2, email: email});
+  $.post("../api/signup.php", {login: login, password: password, password2: password2, email: email});
 }

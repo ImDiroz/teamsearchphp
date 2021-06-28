@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="static/images/favicon.png" type="image/png">
-    <link rel="stylesheet" href="static/css/null.css">
-    <link rel="stylesheet" href="static/css/second.css">
-    <link rel="stylesheet" href="static/css/style.css">
-    <link rel="stylesheet" href="static/css/signup-login-adaptive.css">
+    <link rel="shortcut icon" href="../static/images/favicon.png" type="image/png">
+    <link rel="stylesheet" href="../static/css/null.css">
+    <link rel="stylesheet" href="../static/css/second.css">
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="../static/css/signup-login-adaptive.css">
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
     <title>TeamSearch | Регистрация</title>
@@ -16,7 +16,7 @@
 <body style="opacity:0; transition: 1.5s;">
     <header class="header-signup">
         <div class="logo__signup">
-            <img src="static/images/main/logo.png" width="75" height="68">
+            <img src="../static/images/main/logo.png" width="75" height="68">
             <a href="index.html"><h1 class="teamsearch_logo_reg">TeamSearch</h1></a>
         </div>
     </header>
@@ -50,12 +50,12 @@
                     <div class="line"></div>
                 </div>
                 <div class="five">
-                    <object class="icons" type="image/svg+xml" data="static/images/signup-login/VK.svg" width="27" height="27"></object>
-                    <object class="icons" type="image/svg+xml" data="static/images/signup-login/GOOGLE.svg" width="27" height="27"></object>
-                    <object class="icons" type="image/svg+xml" data="static/images/signup-login/Yandex.svg" width="27" height="27"></object>
-                    <object class="icons" type="image/svg+xml" data="static/images/signup-login/Facebook.svg" width="27" height="27"></object>
-                    <object class="icons" type="image/svg+xml" data="static/images/signup-login/Twitter.svg" width="27" height="27"></object>
-                    <object class="icons" type="image/svg+xml" data="static/images/signup-login/Instagram.svg" width="27" height="27"></object>
+                    <object class="icons" type="image/svg+xml" data="../static/images/signup-login/VK.svg" width="27" height="27"></object>
+                    <object class="icons" type="image/svg+xml" data="../static/images/signup-login/GOOGLE.svg" width="27" height="27"></object>
+                    <object class="icons" type="image/svg+xml" data="../static/images/signup-login/Yandex.svg" width="27" height="27"></object>
+                    <object class="icons" type="image/svg+xml" data="../static/images/signup-login/Facebook.svg" width="27" height="27"></object>
+                    <object class="icons" type="image/svg+xml" data="../static/images/signup-login/Twitter.svg" width="27" height="27"></object>
+                    <object class="icons" type="image/svg+xml" data="../static/images/signup-login/Instagram.svg" width="27" height="27"></object>
                 </div>
             </div>
             <div class="section__two" style="flex-direction: column;">
@@ -72,7 +72,7 @@
         });
       </script>
 
-      <script src="static/js/authorization/check_signup.js"></script>
+      <script src="../static/js/authorization/check_signup.js"></script>
     <p class="not_supported">Недоступно для моб. устройств.</p>
     <p class="not_supported">Моб. версия сайта - <a href="https://m.teamsearch.ru">m.teamsearch.ru</a></p>
 </body>
