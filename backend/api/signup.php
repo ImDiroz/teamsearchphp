@@ -1,16 +1,16 @@
 <?php
   $db = new SQLite3("../database.db");
 
-  $login = $_POST["login"];
-  $password = $_POST["password"];
-  $email = $_POST["email"];
+  $login = trim($_POST["login"]);
+  $password = trim($_POST["password"]);
+  $email = trim($_POST["email"]);
 
-  $sql = "SELECT * FROM user WHERE login=$login";
-  $result = $db->querySingle($sql);
-  if ($result == false) {
-    $sql = "INSERT INTO user
-    (login, password, email)
-    VALUES($login, $password, $email)"
+  $sql = "SELECT ROW_NUMBER() FROM user WHERE login=".$login;
+  $result = $db->exec($sql);
+  echo $result;
+  if ($result == 0) {
+    $sql = "INSERT INTO user (login, password, email) VALUES(`$login`, `$password`, `$email`)";
+    $db->querySingle($sql);
     echo "Success";
   }
   else {

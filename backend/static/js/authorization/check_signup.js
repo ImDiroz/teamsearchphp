@@ -1,3 +1,7 @@
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 function Signup() {
   var login = $(".login input:text").val();
   var password = $(".password input:text").val();
@@ -13,6 +17,27 @@ function Signup() {
   else if (!checkbox) {
     swal("Упс!", "Вы не приняли правила пользования сайтом teamsearch.ru!", "error");
   }
+  else {
 
-  $.post("../api/signup.php", {login: login, password: password, password2: password2, email: email});
+  $.post(
+    "../api/signup.php", 
+    {login: login, password: password, password2: password2, email: email},
+    function(data) {
+      if (data == "Success") {
+        swal({
+          title: "Поздравляем!", 
+          text: "Вы были успешно зарегистрированы",
+          timer: 1000,
+          button: false,
+          icon: "success"
+        }).then((value) => {
+          window.location = "/login.php";
+        })
+
+        } else {
+        swal("Упс!", "Кажется пользователь с таким логином уже существует", "error");
+      }
+    }
+  );
+  }
 }

@@ -13,9 +13,9 @@
     <title>TeamSearch | Главная</title>
 </head>
 <body>
-    <div class="warning">
-        <h1>Такой пользователь уже существует!</h1>
-    </div>
+    <!-- <div class="warning"> -->
+        <!-- <h1>Такой пользователь уже существует!</h1> -->
+    <!-- </div> -->
     <header class="header" style="animation: header  3s 1 ease-in-out;">
         <a href="profile.html"><div class="goto_profile">
             <div class="svg_arrow_down"></div>
@@ -36,7 +36,7 @@
         <div class="section" style="animation: titleone  2s 1 ease-in-out;">
             <h1 class="main__text">Найди себе команду по душе!</h1>
             <p class="main__text">Форум для геймеров.</p>
-            <a href="login.html"><button>Искать</button></a>
+            <a href="login.php"><button>Искать</button></a>
             <div class="ad-adaptive"></div>
         </div>
         <div class="section" style="animation: titletwo  2s 1 ease-in-out;">
