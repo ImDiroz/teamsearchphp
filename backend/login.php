@@ -4,18 +4,18 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="../static/images/favicon.png" type="image/png">
-    <link rel="stylesheet" href="../static/css/null.css">
-    <link rel="stylesheet" href="../static/css/second.css">
-    <link rel="stylesheet" href="../static/css/style.css">
-    <link rel="stylesheet" href="../static/css/signup-login-adaptive.css">
+    <link rel="shortcut icon" href="static/images/favicon.png" type="image/png">
+    <link rel="stylesheet" href="static/css/null.css">
+    <link rel="stylesheet" href="static/css/second.css">
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="stylesheet" href="static/css/signup-login-adaptive.css">
     <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
     <title>TeamSearch | Авторизация</title>
 </head>
 <body style="opacity:0; transition: 1.5s;">
     <header class="header-signup">
         <div class="logo__signup">
-            <img src="../static/images/main/logo.png" width="75" height="68">
+            <img src="static/images/main/logo.png" width="75" height="68">
             <a href="/"><h1 class="teamsearch_logo_reg">TeamSearch</h1></a>
         </div>
     </header>
@@ -26,11 +26,11 @@
             <div class="ad-reg"></div>
         </div>
         <div class="registration-section">
-            <div class="section__two">
+            <div class="login section__two">
                 <h4 class="two">Логин:</h4>
                 <input type="text" placeholder="example">
             </div>
-            <div class="section__two">
+            <div class="password section__two">
                 <h4 class="one">Пароль:</h4>
                 <input type="text" placeholder="password">
             </div>
@@ -46,7 +46,8 @@
         $(document).ready(function() {    
           $("body").css("opacity", "1");
         });
-      </script>
+    </script>
+    <script src="static/js/authorization/check_sign-in-up.js"></script>
     <p class="not_supported">Недоступно для моб. устройств.</p>
     <p class="not_supported">Моб. версия сайта - <a href="https://m.teamsearch.ru">m.teamsearch.ru</a></p>
 </body>

@@ -8,5 +8,6 @@ cursor.execute("""CREATE TABLE user (
     login text,
     password text,
     email text,
-    registration_time time
+    token text,
+    registration_time integer
 );""")

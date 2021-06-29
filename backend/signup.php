@@ -67,14 +67,13 @@
             <div class="ad-adaptive"></div>
         </div>
     </div>
-    <?php echo $_SERVER['REQUEST_URI']; ?> 
     <script>
         $(document).ready(function() {
           $("body").css("opacity", "1");
         });
       </script>
 
-      <script src="static/js/authorization/check_signup.js"></script>
+      <script src="static/js/authorization/check_sign-in-up.js"></script>
     <p class="not_supported">Недоступно для моб. устройств.</p>
     <p class="not_supported">Моб. версия сайта - <a href="https://m.teamsearch.ru">m.teamsearch.ru</a></p>
 </body>
