@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="static/css/signup-login-adaptive.css">
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script> -->
     <title>TeamSearch | Регистрация</title>
 </head>
 <body style="opacity:0; transition: 1.5s;">

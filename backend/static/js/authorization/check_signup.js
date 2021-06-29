@@ -21,8 +21,9 @@ function Signup() {
 
   $.post(
     "../api/signup.php", 
-    {login: login, password: password, password2: password2, email: email},
+    {login: login, password: password, email: email},
     function(data) {
+      console.log(data);
       if (data == "Success") {
         swal({
           title: "Поздравляем!", 
