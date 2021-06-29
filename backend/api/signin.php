@@ -8,7 +8,7 @@ $sql = "SELECT COUNT(*) AS count FROM user WHERE login=:login AND password=:pass
 
 $rs = $connection->prepare($sql);
 $rs->bindValue(":login", $login, SQLITE3_TEXT);
-$rs->bindValue(":password", $password, SQLITE3_TEXT);
+$rs->bindValue(":password", md5($password), SQLITE3_TEXT);
 
 $result = $rs->execute();
 $count = $result->fetchArray()["count"];
