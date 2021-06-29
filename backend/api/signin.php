@@ -14,10 +14,17 @@ $result = $rs->execute();
 $count = $result->fetchArray()["count"];
 
 if ($count == 0) {
-  echo "Success";
+  echo "Invalid data";
 }
 else {
-  echo "Already exists";
+  $sql = "SELECT token FROM user WHERE login=:login";
+  $rs = $connection->prepare($sql);
+  $rs->bindValue(":login", $login, SQLITE3_TEXT);
+  $result = $rs->execute();
+  $token = $result->fetchArray()["token"];
+  session_start();
+  $_SESSION["token"] = $token;
+  echo "Success";
 }
 
 unset($connection);

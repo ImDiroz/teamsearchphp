@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="static/css/second.css">
     <link rel="stylesheet" href="static/css/style.css">
     <link rel="stylesheet" href="static/css/signup-login-adaptive.css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
     <title>TeamSearch | Авторизация</title>
 </head>
@@ -35,7 +36,7 @@
                 <input type="text" placeholder="password">
             </div>
             <div class="section__two" style="flex-direction: column;">
-                <a href="#"><button>Авторизация</button></a>
+                <a href="javascript:Signin()"><button>Авторизация</button></a>
                 <div style="display: flex;"><input class="checkbox" type="checkbox" style="margin-bottom: 15px;"><label style="line-height: 20px;">Я соглашаюсь со всеми <a href="https://vk.com/topic-156698620_42085360">правилами пользования сайтом</a></label></div>
             </div>
             <h5 class="or_login-register">Если у вас нет аккаунта - <a href="/signup.php">зарегистрируйтесь</a></h5>
