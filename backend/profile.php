@@ -9,9 +9,25 @@
     <link rel="stylesheet" href="static/css/second.css">
     <link rel="stylesheet" href="static/css/after-register.css">
     <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <title>TeamSearch | [Никнейм]</title>
 </head>
-<body style="opacity:0; transition: 1.5s;">
+<?php
+  $login = $_GET["login"];
+  $connection = new SQLITE3("database.db");
+  $sql = "SELECT COUNT(*) as count FROM user WHERE login=:login";
+  $rs = $connection->prepare($sql);
+  $rs->bindValue(":login", $login, SQLITE3_TEXT);
+  $result = $rs->execute()->fetchArray()["count"];
+
+  $sql2 = "SELECT * FROM user WHERE login=:login";
+  $rs2 = $connection->prepare($sql2);
+  $rs2->bindValue(":login", $login, SQLITE3_TEXT);
+  $user = $rs2->execute()->fetchArray();
+  // print_r($user[login]);
+  ?>
+    <body style="">
+    <?php if ($result > 0) { ?>
     <div class="report-popup" id="report-popup">
         <div class="report-popup-content">
             <h1 style="margin-bottom: 7px;">Вы собираетесь подать жалобу на <a target="_blank" href="profile.html">DIROZ</h1></a>
@@ -40,17 +56,38 @@
     <div class="content">
         <div class="column__one">
             <div class="section__one">
-                <img src="static/images/profile/avatar.png" class="avatar">
+                <img src="user-avatars/<?php echo $user[login]; ?>" class="avatar">
                 <div class="row__one">
                     <div class="microrow__one">
-                        <h1>DIROZ</h1>
+
+                        <!-- login -->
+                        <h1><?php echo $user[login]; ?></h1>
+
+                        <!-- if user was registered he is VERIFIED -->
                         <object style="margin-left: 12px;" type="image/svg+xml" data="static/images/profile/verifed.svg" width="45" height="45"></object>
-                        <object style="margin-left: 12px;" type="image/svg+xml" data="static/images/profile/dev.svg" width="45" height="45"></object>
-                        <object style="margin-left: 12px;" type="image/svg+xml" data="static/images/profile/vip.svg" width="45" height="45"></object>
+                        
+
+                        <!-- check if user is developer -->
+                        <?php if ($user[dev]) { ?>
+                          <object style="margin-left: 12px;" type="image/svg+xml" data="static/images/profile/dev.svg" width="45" height="45"></object>
+                        <?php } ?>
+                        
+
+                        <!-- check if user has vip -->
+                        <?php if ($user[vip]) { ?>
+
+                          <object href="javascript:info_vip()" onclick="info_vip();" style="margin-left: 12px;" type="image/svg+xml" data="static/images/profile/vip.svg" width="45" height="45"></object>
+
+                        <?php } ?>
                     </div>
+
+                    
+                    <!-- description -->
                     <div class="microrow__two">
-                        <p>Таким образом начало повседневной работы по формированию позиции представляет собой интересный эксперимент проверки модели развития.</p>
+                        <p><?php echo $user[description] ?></p>
                     </div>
+
+
                 </div>
             </div>
             <div class="section__two">
@@ -154,10 +191,22 @@
     <p class="not_supported">Недоступно для моб. устройств.</p>
     <p class="not_supported">Моб. версия сайта - <a href="https://m.teamsearch.ru">m.teamsearch.ru</a></p>
     <script>
-        $(document).ready(function() {    
+        $(document).ready(function() {
           $("body").css("opacity", "1");
         });
     </script>
     <script src="static/js/profile/report-popup.js"></script>
+<?php } else { ?>
+  <script type="text/javascript">
+    swal("Мы не нашли пользователя \"<?php echo $login ?>\"!",
+    {
+      title: "Упс... Что-то пошло не так...",
+      buttons: false,
+      allowOutsideClick: false,
+      icon: "error"
+    });
+  </script>
+<?php } ?>
 </body>
+
 </html>

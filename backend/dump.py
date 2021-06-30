@@ -9,5 +9,8 @@ cursor.execute("""CREATE TABLE user (
     password text,
     email text,
     token text,
+    description text DEFAULT \"Пока здесь нет описания...\",
+    vip int,
+    dev int,
     registration_time integer
 );""")

@@ -33,11 +33,13 @@ if ($count == 0) {
   $rs->bindValue(":email", $email, SQLITE3_TEXT);
   $rs->bindValue(":token", $token, SQLITE3_TEXT);
   $rs->execute();
+  copy("../static/images/profile/avatar.png", "../user-avatars/".$login);
   echo "Success";
 }
 else {
   echo "Already exists";
   echo "Count: " . $count;
 }
+
 
 unset($connection);
