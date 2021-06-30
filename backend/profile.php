@@ -13,19 +13,19 @@
     <title>TeamSearch | [Никнейм]</title>
 </head>
 <?php
-  $login = $_GET["login"];
-  $connection = new SQLITE3("database.db");
-  $sql = "SELECT COUNT(*) as count FROM user WHERE login=:login";
-  $rs = $connection->prepare($sql);
-  $rs->bindValue(":login", $login, SQLITE3_TEXT);
-  $result = $rs->execute()->fetchArray()["count"];
+    $login = $_GET["login"];
+    $connection = new SQLITE3("database.db");
+    $sql = "SELECT COUNT(*) as count FROM user WHERE login=:login";
+    $rs = $connection->prepare($sql);
+    $rs->bindValue(":login", $login, SQLITE3_TEXT);
+    $result = $rs->execute()->fetchArray()["count"];
 
-  $sql2 = "SELECT * FROM user WHERE login=:login";
-  $rs2 = $connection->prepare($sql2);
-  $rs2->bindValue(":login", $login, SQLITE3_TEXT);
-  $user = $rs2->execute()->fetchArray();
-  // print_r($user[login]);
-  ?>
+    $sql2 = "SELECT * FROM user WHERE login=:login";
+    $rs2 = $connection->prepare($sql2);
+    $rs2->bindValue(":login", $login, SQLITE3_TEXT);
+    $user = $rs2->execute()->fetchArray();
+?>
+
     <body style="">
     <?php if ($result > 0) { ?>
     <div class="report-popup" id="report-popup">
@@ -65,13 +65,13 @@
 
                         <!-- if user was registered he is VERIFIED -->
                         <object style="margin-left: 12px;" type="image/svg+xml" data="static/images/profile/verifed.svg" width="45" height="45"></object>
-                        
+
 
                         <!-- check if user is developer -->
                         <?php if ($user[dev]) { ?>
                           <object style="margin-left: 12px;" type="image/svg+xml" data="static/images/profile/dev.svg" width="45" height="45"></object>
                         <?php } ?>
-                        
+
 
                         <!-- check if user has vip -->
                         <?php if ($user[vip]) { ?>
@@ -81,7 +81,7 @@
                         <?php } ?>
                     </div>
 
-                    
+
                     <!-- description -->
                     <div class="microrow__two">
                         <p><?php echo $user[description] ?></p>
@@ -93,8 +93,8 @@
             <div class="section__two">
                 <a href="messages.html" style="margin-right: 20px;"><div class="main-button">Подружиться</div></a>
                 <a onclick="ReportPopUpShow()" style="font-family: Montserrat; font-weight: 500; font-size: 18px; color: #DD3737; outline: none; cursor: pointer;">Жалоба</a>
-                <!-- <object style="margin-left: 12px;" type="image/svg+xml" data="static/images/profile/report.svg" width="45" height="39"></object> -->
-                <!-- <div style="display: flex; flex-direction: column;">
+                <!-- <object style="margin-left: 12px;" type="image/svg+xml" data="static/images/profile/report.svg" width="45" height="39"></object>
+                <div style="display: flex; flex-direction: column;">
                     <a href="settings.html"><div class="main-button" style="margin-bottom: 12px;">Настройки</div></a>
                     <div class="main-button-red">Выйти</div>
                 </div> -->
@@ -196,17 +196,11 @@
         });
     </script>
     <script src="static/js/profile/report-popup.js"></script>
-<?php } else { ?>
-  <script type="text/javascript">
-    swal("Мы не нашли пользователя \"<?php echo $login ?>\"!",
-    {
-      title: "Упс... Что-то пошло не так...",
-      buttons: false,
-      allowOutsideClick: false,
-      icon: "error"
-    });
-  </script>
-<?php } ?>
+<?php
+  } else {
+    header("Location: /404.php");
+  }
+  ?>
 </body>
 
 </html>

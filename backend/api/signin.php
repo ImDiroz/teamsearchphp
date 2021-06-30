@@ -23,6 +23,7 @@ else {
   $result = $rs->execute();
   $token = $result->fetchArray()["token"];
   session_start();
+  $_SESSION["login"] = $login;
   $_SESSION["token"] = $token;
   echo "Success";
 }

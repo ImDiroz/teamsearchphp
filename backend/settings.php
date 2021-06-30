@@ -31,7 +31,7 @@
     <div class="content-settings">
         <div class="column__one">
             <div class="section__one">
-                <div style="width: 220px;">
+                <div class="input-avatar" style="width: 220px;">
                     <img src="static/images/profile/avatar.png" class="avatar" style="margin-bottom: 10px;">
                     <input type="file">
                 </div>
@@ -47,15 +47,23 @@
                 </div>
             </div>
             <div class="section__two">
-                <a href="profile.html"><div class="main-button">Сохранить</div></a>
+                <a href="#"><div class="main-button">Сохранить</div></a>
             </div>
+            <canvas style="overflow: hidden;" id="canvas" width="300" height="300"></canvas>
         </div>
     </div>
     <p class="not_supported">Недоступно для моб. устройств.</p>
     <p class="not_supported">Моб. версия сайта - <a href="https://m.teamsearch.ru">m.teamsearch.ru</a></p>
     <script>
-        $(document).ready(function() {    
+        $(document).ready(() => {
           $("body").css("opacity", "1");
+          $(".main-button").click(() => {
+            console.log("[teamsearch] Save button was clicked");
+            let new_login = $(".name-input").val();
+            let new_description = $(".desc-textarea").val();
+            let new_image = $(".input-avatar input")[0].files[0];
+            console.log(new_image);
+          });
         });
       </script>
 </body>

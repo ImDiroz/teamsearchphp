@@ -10,27 +10,34 @@ function check_empty(text)
 function Signin() {
   var login = $(".login input:text").val();
   var password = $(".password input:text").val();
-  $.post(
-    "../api/signin.php", 
-    {login: login, password: password},
-    function(data) {
-      console.log(data);
-      if (data == "Success") {
-        swal({
-          title: "Поздравляем!", 
-          text: "Вы были успешно авторизированны!",
-          timer: 1000,
-          button: false,
-          icon: "success"
-        }).then((value) => {
-          window.location = "/profile.php";
-        })
+  var checkbox = $(".checkbox").is(':checked');
+  // console.log(checkbox);
+  
+  if (!checkbox) {
+    swal("Упс!", "Вы не приняли правила пользования сайтом teamsearch.ru!", "error");
+  } else {
+    $.post(
+      "../api/signin.php",
+      {login: login, password: password},
+      function(data) {
+        console.log(data);
+        if (data == "Success") {
+          swal({
+            title: "Поздравляем!",
+            text: "Вы были успешно авторизированны!",
+            timer: 1000,
+            button: false,
+            icon: "success"
+          }).then((value) => {
+            window.location = "/profile.php?login=" + login;
+          })
 
-        } else {
-        swal("Упс!", "Кажется вы ввели неправильные данные!", "error");
+          } else {
+          swal("Упс!", "Кажется вы ввели неправильные данные!", "error");
+        }
       }
-    }
-  );
+    );
+  }
 }
 
 function Signup() {
@@ -56,13 +63,13 @@ function Signup() {
   }
   else {
     $.post(
-      "../api/signup.php", 
+      "../api/signup.php",
       {login: login, password: password, email: email},
       function(data) {
         console.log(data);
         if (data == "Success") {
           swal({
-            title: "Поздравляем!", 
+            title: "Поздравляем!",
             text: "Вы были успешно зарегистрированы",
             timer: 1000,
             button: false,
