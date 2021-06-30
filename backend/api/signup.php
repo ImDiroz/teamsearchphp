@@ -1,45 +1,40 @@
 <?php
 
-function generateToken($length=20) {
-    $chars = ".,#@!?><%^&*()[]{}';/abcdefghijklmnopqrstuvwxyzABCDEFGHI JKLMNOPRQSTUVWXYZ0123456789";
-    $code = "";
-    $clen = strlen($chars) - 1;
-    while (strlen($code) < $length) {
-            $code .= $chars[mt_rand(0,$clen)];
-    }
-    return $code;
-}
+include_once "./general_functionality/check_user_exists.php";
+include_once "./general_functionality/generate_token.php";
+include_once "./general_functionality/execute_sql.php";
 
+// create new sqlite3 connection
 $connection = new SQLite3("../database.db");
 
+// get values from post
 $login = trim($_POST["login"]);
 $password = trim($_POST["password"]);
 $email = trim($_POST["email"]);
 
-$sql = "SELECT COUNT(*) AS count FROM user WHERE login=:login";
+// check if user already exists
+if (!check_if_user_exists_by_login($connection, $login)) {
+  // making md5 hash
+  $password = md5($password);
 
-$rs = $connection->prepare($sql);
-$rs->bindValue(":login", $login, SQLITE3_TEXT);
+  // insert values into database
+  sqlite3_exec(
+    $connection,
+    "INSERT INTO user (login, password, email, token) VALUES('$login', '$password', '$email', '$token')"
+  );
 
-$result = $rs->execute();
-$count = $result->fetchArray()["count"];
+  // create avatar png file
+  copy("../static/images/profile/avatar.png", "../user-avatars/" . $login);
 
-if ($count == 0) {
-  $sql = "INSERT INTO user (login, password, email, token) VALUES(:login, :password, :email, :token)";
-  $rs = $connection->prepare($sql);
-  $token = generateToken();
-  $rs->bindValue(":login", $login, SQLITE3_TEXT);
-  $rs->bindValue(":password", md5($password), SQLITE3_TEXT);
-  $rs->bindValue(":email", $email, SQLITE3_TEXT);
-  $rs->bindValue(":token", $token, SQLITE3_TEXT);
-  $rs->execute();
-  copy("../static/images/profile/avatar.png", "../user-avatars/".$login);
+  // if user with the same login do not exists print success
   echo "Success";
-}
-else {
+} else {
+  // print that user already exists
   echo "Already exists";
+
+  /* (for debug) */
   echo "Count: " . $count;
 }
 
-
+// delete $connection object
 unset($connection);

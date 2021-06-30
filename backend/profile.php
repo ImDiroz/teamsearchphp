@@ -1,202 +1,207 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="static/images/favicon.png" type="image/png">
-    <link rel="stylesheet" href="static/css/null.css">
-    <link rel="stylesheet" href="static/css/second.css">
-    <link rel="stylesheet" href="static/css/after-register.css">
-    <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <title>TeamSearch | [Никнейм]</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="static/images/favicon.png" type="image/png">
+  <link rel="stylesheet" href="static/css/null.css">
+  <link rel="stylesheet" href="static/css/second.css">
+  <link rel="stylesheet" href="static/css/after-register.css">
+  <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <title>TeamSearch | [Никнейм]</title>
 </head>
 <?php
-    $login = $_GET["login"];
-    $connection = new SQLITE3("database.db");
-    $sql = "SELECT COUNT(*) as count FROM user WHERE login=:login";
-    $rs = $connection->prepare($sql);
-    $rs->bindValue(":login", $login, SQLITE3_TEXT);
-    $result = $rs->execute()->fetchArray()["count"];
+include "./api/general_functionality/check_user_exists.php";
+include "./api/general_functionality/get_user_data.php";
 
-    $sql2 = "SELECT * FROM user WHERE login=:login";
-    $rs2 = $connection->prepare($sql2);
-    $rs2->bindValue(":login", $login, SQLITE3_TEXT);
-    $user = $rs2->execute()->fetchArray();
+$login = $_GET["login"];
+$connection = new SQLITE3("database.db");
+
+$user = get_user_data_by_login($connection, $login);
 ?>
 
-    <body style="">
-    <?php if ($result > 0) { ?>
+<body style="">
+  <?php if (check_if_user_exists_by_login($connection, $login)) { ?>
     <div class="report-popup" id="report-popup">
-        <div class="report-popup-content">
-            <h1 style="margin-bottom: 7px;">Вы собираетесь подать жалобу на <a target="_blank" href="profile.html">DIROZ</h1></a>
-            <h1 style="margin-bottom: 11px;">Напишите сюда пункт правила, которое нарушает этот пользователь из <a target="_blank" href="https://vk.com/topic-156698620_42085360">“Правила пользования сайтом“</a> группы ВКонтакте</h1>
-            <div style="display: flex; align-items: center; margin-bottom: 25px;"><h1 style="margin-right: 11px;">Пункт:</h1><input type="text"></div>
-            <div class="main-button" style="margin-bottom: 20px;">Ок</div>
-            <a onclick="ReportPopUpHide()" style="cursor: pointer;">Передумал</a>
+      <div class="report-popup-content">
+        <h1 style="margin-bottom: 7px;">Вы собираетесь подать жалобу на <a target="_blank" href="profile.html">DIROZ</h1></a>
+        <h1 style="margin-bottom: 11px;">Напишите сюда пункт правила, которое нарушает этот пользователь из <a target="_blank" href="https://vk.com/topic-156698620_42085360">“Правила пользования сайтом“</a> группы ВКонтакте</h1>
+        <div style="display: flex; align-items: center; margin-bottom: 25px;">
+          <h1 style="margin-right: 11px;">Пункт:</h1><input type="text">
         </div>
+        <div class="main-button" style="margin-bottom: 20px;">Ок</div>
+        <a onclick="ReportPopUpHide()" style="cursor: pointer;">Передумал</a>
+      </div>
     </div>
     <header class="header">
-        <a href="#"><div class="goto_profile">
-            <div class="svg_arrow_down"></div>
-            <img src="static/images/main/Profileicon.png" class="logo-h-and-w" width="73" height="73">
-            <h1 class="main_goto_profile_text">Профиль</h1>
-        </div></a>
-        <div class="header_menu_box">
-            <h1 class="header_menu"><a href="index.html">Главная</a></h1>
-            <h1 class="header_menu"><a href="search.html">Поиск</a></h1>
-            <h1 class="header_menu"><a href="shop.html">Магазин</a></h1>
+      <a href="#">
+        <div class="goto_profile">
+          <div class="svg_arrow_down"></div>
+          <img src="static/images/main/Profileicon.png" class="logo-h-and-w" width="73" height="73">
+          <h1 class="main_goto_profile_text">Профиль</h1>
         </div>
-        <div class="logo__title">
-            <img src="static/images/main/logo.png" width="75" height="68">
-            <a href="index.html"><h1 class="teamsearch_logo">TeamSearch</h1></a>
-        </div>
+      </a>
+      <div class="header_menu_box">
+        <h1 class="header_menu"><a href="index.html">Главная</a></h1>
+        <h1 class="header_menu"><a href="search.html">Поиск</a></h1>
+        <h1 class="header_menu"><a href="shop.html">Магазин</a></h1>
+      </div>
+      <div class="logo__title">
+        <img src="static/images/main/logo.png" width="75" height="68">
+        <a href="index.html">
+          <h1 class="teamsearch_logo">TeamSearch</h1>
+        </a>
+      </div>
     </header>
     <div class="content">
-        <div class="column__one">
-            <div class="section__one">
-                <img src="user-avatars/<?php echo $user[login]; ?>" class="avatar">
-                <div class="row__one">
-                    <div class="microrow__one">
+      <div class="column__one">
+        <div class="section__one">
+          <img src="user-avatars/<?php echo $user[login]; ?>" class="avatar">
+          <div class="row__one">
+            <div class="microrow__one">
 
-                        <!-- login -->
-                        <h1><?php echo $user[login]; ?></h1>
+              <!-- login -->
+              <h1><?php echo $user[login]; ?></h1>
 
-                        <!-- if user was registered he is VERIFIED -->
-                        <object style="margin-left: 12px;" type="image/svg+xml" data="static/images/profile/verifed.svg" width="45" height="45"></object>
-
-
-                        <!-- check if user is developer -->
-                        <?php if ($user[dev]) { ?>
-                          <object style="margin-left: 12px;" type="image/svg+xml" data="static/images/profile/dev.svg" width="45" height="45"></object>
-                        <?php } ?>
+              <!-- if user was registered he is VERIFIED -->
+              <object style="margin-left: 12px;" type="image/svg+xml" data="static/images/profile/verifed.svg" width="45" height="45"></object>
 
 
-                        <!-- check if user has vip -->
-                        <?php if ($user[vip]) { ?>
-
-                          <object href="javascript:info_vip()" onclick="info_vip();" style="margin-left: 12px;" type="image/svg+xml" data="static/images/profile/vip.svg" width="45" height="45"></object>
-
-                        <?php } ?>
-                    </div>
+              <!-- check if user is developer -->
+              <?php if ($user[dev]) { ?>
+                <object style="margin-left: 12px;" type="image/svg+xml" data="static/images/profile/dev.svg" width="45" height="45"></object>
+              <?php } ?>
 
 
-                    <!-- description -->
-                    <div class="microrow__two">
-                        <p><?php echo $user[description] ?></p>
-                    </div>
+              <!-- check if user has vip -->
+              <?php if ($user[vip]) { ?>
 
+                <object href="javascript:info_vip()" onclick="info_vip();" style="margin-left: 12px;" type="image/svg+xml" data="static/images/profile/vip.svg" width="45" height="45"></object>
 
-                </div>
+              <?php } ?>
             </div>
-            <div class="section__two">
-                <a href="messages.html" style="margin-right: 20px;"><div class="main-button">Подружиться</div></a>
-                <a onclick="ReportPopUpShow()" style="font-family: Montserrat; font-weight: 500; font-size: 18px; color: #DD3737; outline: none; cursor: pointer;">Жалоба</a>
-                <!-- <object style="margin-left: 12px;" type="image/svg+xml" data="static/images/profile/report.svg" width="45" height="39"></object>
+
+
+            <!-- description -->
+            <div class="microrow__two">
+              <p><?php echo $user[description] ?></p>
+            </div>
+
+
+          </div>
+        </div>
+        <div class="section__two">
+          <a href="messages.html" style="margin-right: 20px;">
+            <div class="main-button">Подружиться</div>
+          </a>
+          <a onclick="ReportPopUpShow()" style="font-family: Montserrat; font-weight: 500; font-size: 18px; color: #DD3737; outline: none; cursor: pointer;">Жалоба</a>
+          <!-- <object style="margin-left: 12px;" type="image/svg+xml" data="static/images/profile/report.svg" width="45" height="39"></object>
                 <div style="display: flex; flex-direction: column;">
                     <a href="settings.html"><div class="main-button" style="margin-bottom: 12px;">Настройки</div></a>
                     <div class="main-button-red">Выйти</div>
                 </div> -->
-            </div>
         </div>
-        <div class="column__two">
-            <div class="card">
-                <div class="section__one">
-                    <h1 class="gamename">CS GO</h1>
-                    <h1 class="nickname">DIROZ</h1>
-                </div>
-                <div class="section__two">
-                    <h1 class="stepinfo">Discord:</h1>
-                    <h1 class="primeinfo">ERROR#4127</h1>
-                </div>
-                <div class="section__three">
-                    <h1 class="stepinfo">Имя:</h1>
-                    <h1 class="primeinfo">Захарий</h1>
-                </div>
-                <div class="section__four">
-                    <p>Задача организации, в особенности же сложившаяся структура организации представляет собой интересный эксперимент проверки систем массового участия. Не следует, однако забывать, что консультация с широким активом позволяет оценить значение существенных финансовых и административных условий.</p>
-                </div>
-            </div>
-            <div class="card">
-                <div class="section__one">
-                    <h1 class="gamename">CS GO</h1>
-                    <h1 class="nickname">DIROZ</h1>
-                </div>
-                <div class="section__two">
-                    <h1 class="stepinfo">Discord:</h1>
-                    <h1 class="primeinfo">ERROR#4127</h1>
-                </div>
-                <div class="section__three">
-                    <h1 class="stepinfo">Имя:</h1>
-                    <h1 class="primeinfo">Захарий</h1>
-                </div>
-                <div class="section__four">
-                    <p>Задача организации, в особенности же сложившаяся структура организации представляет собой интересный эксперимент проверки систем массового участия. Не следует, однако забывать, что консультация с широким активом позволяет оценить значение существенных финансовых и административных условий.</p>
-                </div>
-            </div>
-            <div class="card card-vip">
-                <div class="section__one">
-                    <h1 class="gamename vip_text">CS GO</h1>
-                    <h1 class="nickname">DIROZ</h1>
-                </div>
-                <div class="section__two">
-                    <h1 class="stepinfo">Discord:</h1>
-                    <h1 class="primeinfo">ERROR#4127</h1>
-                </div>
-                <div class="section__three">
-                    <h1 class="stepinfo">Имя:</h1>
-                    <h1 class="primeinfo">Захарий</h1>
-                </div>
-                <div class="section__four">
-                    <p>Задача организации, в особенности же сложившаяся структура организации представляет собой интересный эксперимент проверки систем массового участия. Не следует, однако забывать, что консультация с широким активом позволяет оценить значение существенных финансовых и административных условий.</p>
-                </div>
-            </div>
-            <div class="card">
-                <div class="section__one">
-                    <h1 class="gamename">CS GO</h1>
-                    <h1 class="nickname">DIROZ</h1>
-                </div>
-                <div class="section__two">
-                    <h1 class="stepinfo">Discord:</h1>
-                    <h1 class="primeinfo">ERROR#4127</h1>
-                </div>
-                <div class="section__three">
-                    <h1 class="stepinfo">Имя:</h1>
-                    <h1 class="primeinfo">Захарий</h1>
-                </div>
-                <div class="section__four">
-                    <p>Задача организации, в особенности же сложившаяся структура организации представляет собой интересный эксперимент проверки систем массового участия. Не следует, однако забывать, что консультация с широким активом позволяет оценить значение существенных финансовых и административных условий.</p>
-                </div>
-            </div>
-            <div class="card">
-                <div class="section__one">
-                    <h1 class="gamename">CS GO</h1>
-                    <h1 class="nickname">DIROZ</h1>
-                </div>
-                <div class="section__two">
-                    <h1 class="stepinfo">Discord:</h1>
-                    <h1 class="primeinfo">ERROR#4127</h1>
-                </div>
-                <div class="section__three">
-                    <h1 class="stepinfo">Имя:</h1>
-                    <h1 class="primeinfo">Захарий</h1>
-                </div>
-                <div class="section__four">
-                    <p>Задача организации, в особенности же сложившаяся структура организации представляет собой интересный эксперимент проверки систем массового участия. Не следует, однако забывать, что консультация с широким активом позволяет оценить значение существенных финансовых и административных условий.</p>
-                </div>
-            </div>
+      </div>
+      <div class="column__two">
+        <div class="card">
+          <div class="section__one">
+            <h1 class="gamename">CS GO</h1>
+            <h1 class="nickname">DIROZ</h1>
+          </div>
+          <div class="section__two">
+            <h1 class="stepinfo">Discord:</h1>
+            <h1 class="primeinfo">ERROR#4127</h1>
+          </div>
+          <div class="section__three">
+            <h1 class="stepinfo">Имя:</h1>
+            <h1 class="primeinfo">Захарий</h1>
+          </div>
+          <div class="section__four">
+            <p>Задача организации, в особенности же сложившаяся структура организации представляет собой интересный эксперимент проверки систем массового участия. Не следует, однако забывать, что консультация с широким активом позволяет оценить значение существенных финансовых и административных условий.</p>
+          </div>
         </div>
+        <div class="card">
+          <div class="section__one">
+            <h1 class="gamename">CS GO</h1>
+            <h1 class="nickname">DIROZ</h1>
+          </div>
+          <div class="section__two">
+            <h1 class="stepinfo">Discord:</h1>
+            <h1 class="primeinfo">ERROR#4127</h1>
+          </div>
+          <div class="section__three">
+            <h1 class="stepinfo">Имя:</h1>
+            <h1 class="primeinfo">Захарий</h1>
+          </div>
+          <div class="section__four">
+            <p>Задача организации, в особенности же сложившаяся структура организации представляет собой интересный эксперимент проверки систем массового участия. Не следует, однако забывать, что консультация с широким активом позволяет оценить значение существенных финансовых и административных условий.</p>
+          </div>
+        </div>
+        <div class="card card-vip">
+          <div class="section__one">
+            <h1 class="gamename vip_text">CS GO</h1>
+            <h1 class="nickname">DIROZ</h1>
+          </div>
+          <div class="section__two">
+            <h1 class="stepinfo">Discord:</h1>
+            <h1 class="primeinfo">ERROR#4127</h1>
+          </div>
+          <div class="section__three">
+            <h1 class="stepinfo">Имя:</h1>
+            <h1 class="primeinfo">Захарий</h1>
+          </div>
+          <div class="section__four">
+            <p>Задача организации, в особенности же сложившаяся структура организации представляет собой интересный эксперимент проверки систем массового участия. Не следует, однако забывать, что консультация с широким активом позволяет оценить значение существенных финансовых и административных условий.</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="section__one">
+            <h1 class="gamename">CS GO</h1>
+            <h1 class="nickname">DIROZ</h1>
+          </div>
+          <div class="section__two">
+            <h1 class="stepinfo">Discord:</h1>
+            <h1 class="primeinfo">ERROR#4127</h1>
+          </div>
+          <div class="section__three">
+            <h1 class="stepinfo">Имя:</h1>
+            <h1 class="primeinfo">Захарий</h1>
+          </div>
+          <div class="section__four">
+            <p>Задача организации, в особенности же сложившаяся структура организации представляет собой интересный эксперимент проверки систем массового участия. Не следует, однако забывать, что консультация с широким активом позволяет оценить значение существенных финансовых и административных условий.</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="section__one">
+            <h1 class="gamename">CS GO</h1>
+            <h1 class="nickname">DIROZ</h1>
+          </div>
+          <div class="section__two">
+            <h1 class="stepinfo">Discord:</h1>
+            <h1 class="primeinfo">ERROR#4127</h1>
+          </div>
+          <div class="section__three">
+            <h1 class="stepinfo">Имя:</h1>
+            <h1 class="primeinfo">Захарий</h1>
+          </div>
+          <div class="section__four">
+            <p>Задача организации, в особенности же сложившаяся структура организации представляет собой интересный эксперимент проверки систем массового участия. Не следует, однако забывать, что консультация с широким активом позволяет оценить значение существенных финансовых и административных условий.</p>
+          </div>
+        </div>
+      </div>
     </div>
     <p class="not_supported">Недоступно для моб. устройств.</p>
     <p class="not_supported">Моб. версия сайта - <a href="https://m.teamsearch.ru">m.teamsearch.ru</a></p>
     <script>
-        $(document).ready(function() {
-          $("body").css("opacity", "1");
-        });
+      $(document).ready(function() {
+        $("body").css("opacity", "1");
+      });
     </script>
     <script src="static/js/profile/report-popup.js"></script>
-<?php
+  <?php
   } else {
     header("Location: /404.php");
   }
