@@ -1,6 +1,6 @@
 <?php
-require_once "./general_functionality/check_user_exists.php";
-require_once "./general_functionality/get_user_data.php";
+include_once "./general_functionality/check_user_exists.php";
+include_once "./general_functionality/get_user_data.php";
 
 $connection = new SQLite3("../database.db");
 
@@ -12,8 +12,7 @@ if (!check_if_user_exists_by_login_and_password($connection, $login, $password))
 } else {
   $token = get_user_data_by_login($connection, $login)["token"];
   session_start();
-  $_SESSION["login"] = $login;
-  $_SESSION["token"] = $token;
+  $_COOKIE["token"] = $token;
   echo "Success";
 }
 

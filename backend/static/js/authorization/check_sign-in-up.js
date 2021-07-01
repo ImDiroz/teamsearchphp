@@ -12,9 +12,8 @@ function sleep(ms) {
  * @param {*} text text check
  * @returns bool
  */
-function check_empty(text)
-{
-  return text.replaceAll(/\s/g,'') == "";
+function check_empty(text) {
+  return text.replaceAll(/\s/g, '') == "";
 }
 
 /**
@@ -25,7 +24,7 @@ function Signin() {
   var login = $(".login input:text").val();
   var password = $(".password input:text").val();
   var checkbox = $(".checkbox").is(':checked');
-  
+
   // check if checkbox was clicked
   if (!checkbox) {
     swal("Упс!", "Вы не приняли правила пользования сайтом teamsearch.ru!", "error");
@@ -33,8 +32,8 @@ function Signin() {
     // make post request to teamsearch api
     $.post(
       "../api/signin.php",
-      {login: login, password: password},
-      function(data) {
+      { login: login, password: password },
+      function (data) {
         console.log(data);
         if (data == "Success") {
           swal({
@@ -47,7 +46,7 @@ function Signin() {
             window.location = "/profile.php?login=" + login;
           })
 
-          } else {
+        } else {
           swal("Упс!", "Кажется вы ввели неправильные данные!", "error");
         }
       }
@@ -65,7 +64,7 @@ function Signup() {
   var password2 = $(".password2 input:text").val();
   var email = $(".email input:text").val();
   var checkbox = $(".checkbox").is(':checked');
-  
+
   // check if email is empty
   if (check_empty(email)) {
     swal("Упс!", "Email не может быть пустым", "error");
@@ -94,8 +93,8 @@ function Signup() {
     // make post request to teamsearch api
     $.post(
       "../api/signup.php",
-      {login: login, password: password, email: email},
-      function(data) {
+      { login: login, password: password, email: email },
+      function (data) {
         console.log(data);
         if (data == "Success") {
           swal({
@@ -107,8 +106,9 @@ function Signup() {
           }).then((value) => {
             window.location = "/login.php";
           })
-
-          } else {
+        } else if (data == "Too easy password") {
+          swal("Упс!", "Кажется ваш пароль вход в базу самых простых! Советуем сделать его более оригинальнее!", "error");
+        } else {
           swal("Упс!", "Кажется пользователь с таким логином уже существует", "error");
         }
       }

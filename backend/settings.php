@@ -1,3 +1,18 @@
+<?php
+include "./api/general_functionality/get_user_data.php";
+include "./api/general_functionality/user_authentificated.php";
+
+session_start();
+
+if (!check_if_user_was_logged_in()) {
+  $connection = new SQLITE3("database.db");
+  $user = get_user_data_by_login($connection, $_SESSION["login"]);
+  unset($connection);
+} else {
+  header("Location: /login.php");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="ru">
 
@@ -12,13 +27,6 @@
   <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
   <title>TeamSearch | Настройки</title>
 </head>
-<?php
-include "./api/general_functionality/get_user_data.php";
-
-$connection = new SQLITE3("database.db");
-$user = get_user_data_by_login($connection, $_SESSION["login"]);
-unset($connection);
-?>
 
 <body style="opacity:0; transition: 1.5s;">
   <header class="header">
@@ -49,8 +57,8 @@ unset($connection);
           <input type="file">
         </div>
         <div class="row__one">
+          <input class="name-input" value="<?php echo $user["login"]; ?>" type="text">
           <div class="microrow__one">
-            <input class="name-input" value="<?php echo $user[login] ?>" type="text">
             <object style="margin-left: 12px;" type="image/svg+xml" data="static/images/settings/edit.svg" width="45" height="45"></object>
           </div>
           <div class="microrow__two">
