@@ -82,7 +82,7 @@ function Signup() {
 
   // check if first password is equals to second password
   else if (password != password2) {
-    swal("Упс!", "Кажеться пароли которые вы ввели не совпадают!", "error");
+    swal("Упс!", "Кажется пароли которые вы ввели не совпадают!", "error");
   }
 
   // check if checkbox was clicked
