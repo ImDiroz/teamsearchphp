@@ -1,0 +1,3 @@
+[submodule "teamsearch.discord.js"]
+	path = teamsearch.discord.js
+	url = https://github.com/adisalimgereev/teamsearch.discord.js
